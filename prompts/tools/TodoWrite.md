@@ -1,7 +1,7 @@
 ---
 name: TodoWrite
 ---
-
+```markdown
 Use this tool to create and manage a structured task list for your current coding session. This helps you track progress, organize complex tasks, and demonstrate thoroughness to the user.
 It also helps the user understand the progress of the task and overall progress of their requests.
 
@@ -29,8 +29,10 @@ NOTE that you should not use this tool if there is only one trivial task to do. 
 ## Examples of When to Use the Todo List
 
 <example>
-User: I want to add a dark mode toggle to the application settings. Make sure you run the tests and build when you're done!
-Assistant: I'll help add a dark mode toggle to your application settings. Let me create a todo list to track this implementation.
+User: I want to add a dark mode toggle to the application settings. Make sure you run the tests and build when you're done!   
+
+Assistant: I'll help add a dark mode toggle to your application settings. Let me create a todo list to track this implementation.   
+
 *Creates todo list with the following items:*
 1. Creating dark mode toggle component in Settings page
 2. Adding dark mode state management (context/store)
@@ -83,7 +85,12 @@ User: Can you help optimize my React application? It's rendering slowly and has 
 Assistant: I'll help optimize your React application. First, let me examine your codebase to identify potential performance bottlenecks.
 *Reviews component structure, render patterns, state management, and data fetching*
 Assistant: After analyzing your codebase, I've identified several performance issues. Let me create a todo list to track our optimization efforts.
-*Creates todo list with items like: 1) Implementing memoization for expensive calculations in ProductList, 2) Adding virtualization for long lists in Dashboard, 3) Optimizing image loading in Gallery component, 4) Fixing state update loops in ShoppingCart, 5) Reviewing bundle size and implementing code splitting*
+*Creates todo list with items like: 
+1) Implementing memoization for expensive calculations in ProductList, 
+2) Adding virtualization for long lists in Dashboard, 
+3) Optimizing image loading in Gallery component, 
+4) Fixing state update loops in ShoppingCart, 
+5) Reviewing bundle size and implementing code splitting*
 Let's start by implementing memoization for the expensive calculations in your ProductList component.</assistant>
 
 <reasoning>
@@ -184,7 +191,7 @@ The assistant did not use the todo list because this is a single command executi
      - activeForm: "Fixing authentication bug"
 
 When in doubt, use this tool. Being proactive with task management demonstrates attentiveness and ensures you complete all requirements successfully.
-
+```
 ---
 # Tool Params
 - todos: array<object>, The updated todo list, required
