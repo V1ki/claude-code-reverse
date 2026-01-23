@@ -19,6 +19,7 @@ Usage:
 - You will regularly be asked to read screenshots. If the user provides a path to a screenshot, ALWAYS use this tool to view the file at the path. This tool will work with all temporary file paths.
 - If you read a file that exists but has empty contents you will receive a system reminder warning in place of file contents.
 
+---
 # Tool Params
 - file_path: string, The absolute path to the file to read, required
 - offset: number, The line number to start reading from. Only provide if the file is too large to read at once, optional
