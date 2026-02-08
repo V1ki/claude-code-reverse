@@ -25,10 +25,15 @@ Usage notes:
   - Web search is only available in the US
 
 IMPORTANT - Use the correct year in search queries:
-  - Today's date is 2026-01-22. You MUST use this year when searching for recent information, documentation, or current events.
+  - Today's date is {{DATE}}. You MUST use this year when searching for recent information, documentation, or current events.
   - Example: If the user asks for "latest React docs", search for "React documentation 2026", NOT "React documentation 2025"
 
+
 ---
+> {{DATE}} 表示当前日期.
+---
+
+
 # Tool Params
 - query: string, The search query to use, required
 - allowed_domains: array<string>, Only include search results from these domains, optional

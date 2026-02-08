@@ -22,7 +22,8 @@ A powerful search tool built on ripgrep
 - output_mode: string, Output mode: "content" shows matching lines (supports -A/-B/-C context, -n line numbers, head_limit), "files_with_matches" shows file paths (supports head_limit), "count" shows match counts (supports head_limit). Defaults to "files_with_matches"., optional, enum: content | files_with_matches | count
 - -B: number, Number of lines to show before each match (rg -B). Requires output_mode: "content", ignored otherwise., optional
 - -A: number, Number of lines to show after each match (rg -A). Requires output_mode: "content", ignored otherwise., optional
-- -C: number, Number of lines to show before and after each match (rg -C). Requires output_mode: "content", ignored otherwise., optional
+- -C: number, Alias for context., optional
+- context: number, Number of lines to show before and after each match (rg -C). Requires output_mode: "content", ignored otherwise., optional
 - -n: boolean, Show line numbers in output (rg -n). Requires output_mode: "content", ignored otherwise. Defaults to true., optional
 - -i: boolean, Case insensitive search (rg -i), optional
 - type: string, File type to search (rg --type). Common types: js, py, rust, go, java, etc. More efficient than include for standard file types., optional
