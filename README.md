@@ -18,6 +18,7 @@
 ├── README_EN.md
 └── prompts
     ├── agents
+    │   ├── CreateAgent.md
     │   └── built-in
     │       ├── Explore.md
     │       ├── Plan.md
@@ -33,12 +34,18 @@
         ├── Glob.md
         ├── Grep.md
         ├── KillShell.md
+        ├── ListMcpResourcesTool.md
         ├── NotebookEdit.md
         ├── Read.md
+        ├── ReadMcpResourceTool.md
         ├── Skill.md
         ├── Task.md
+        ├── TaskCreate.md
+        ├── TaskGet.md
+        ├── TaskList.md
         ├── TaskOutput.md
-        ├── TodoWrite.md
+        ├── TaskStop.md
+        ├── TaskUpdate.md
         ├── WebFetch.md
         ├── WebSearch.md
         └── Write.md
@@ -46,6 +53,10 @@
 ```
 
 ## 提示词概览
+
+### Agents (`prompts/agents/`)
+
+- [`CreateAgent.md`](prompts/agents/CreateAgent.md)：在 `/agent` 中创建自定义 agent 时使用的生成器提示词（输出 `identifier` / `whenToUse` / `systemPrompt`）
 
 ### Built-in Agents (`prompts/agents/built-in/`)
 
@@ -65,12 +76,18 @@
 - [`Glob.md`](prompts/tools/Glob.md)：基于 glob 的文件匹配
 - [`Grep.md`](prompts/tools/Grep.md)：基于 ripgrep 的内容搜索
 - [`KillShell.md`](prompts/tools/KillShell.md)：终止后台 bash shell
+- [`ListMcpResourcesTool.md`](prompts/tools/ListMcpResourcesTool.md)：列出 MCP server 的可用资源（可按 server 过滤）
 - [`NotebookEdit.md`](prompts/tools/NotebookEdit.md)：编辑/插入/删除 Jupyter notebook cell
 - [`Read.md`](prompts/tools/Read.md)：读取文件内容（支持图片/PDF/ipynb）
+- [`ReadMcpResourceTool.md`](prompts/tools/ReadMcpResourceTool.md)：按 `server` + `uri` 读取 MCP 资源
 - [`Skill.md`](prompts/tools/Skill.md)：执行 skill（slash command，如 `/commit`）
 - [`Task.md`](prompts/tools/Task.md)：启动子 agent 执行复杂多步任务
+- [`TaskCreate.md`](prompts/tools/TaskCreate.md)：创建结构化任务项（task list）
+- [`TaskGet.md`](prompts/tools/TaskGet.md)：按任务 ID 获取完整任务详情
+- [`TaskList.md`](prompts/tools/TaskList.md)：列出当前任务列表与状态摘要
 - [`TaskOutput.md`](prompts/tools/TaskOutput.md)：获取后台 task/agent/shell 的输出
-- [`TodoWrite.md`](prompts/tools/TodoWrite.md)：维护结构化 TODO 列表
+- [`TaskStop.md`](prompts/tools/TaskStop.md)：停止运行中的后台 task
+- [`TaskUpdate.md`](prompts/tools/TaskUpdate.md)：更新任务状态、依赖、owner 与元数据
 - [`WebFetch.md`](prompts/tools/WebFetch.md)：抓取 URL 内容并按提示抽取信息
 - [`WebSearch.md`](prompts/tools/WebSearch.md)：Web 搜索（要求在答复末尾列出 Sources）
 - [`Write.md`](prompts/tools/Write.md)：写入文件（覆盖写，写已存在文件前需先 Read）

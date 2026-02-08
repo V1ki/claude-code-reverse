@@ -18,6 +18,7 @@ This repository records my reverse-engineering notes on Claude Code, including b
 ├── README_EN.md
 └── prompts
     ├── agents
+    │   ├── CreateAgent.md
     │   └── built-in
     │       ├── Explore.md
     │       ├── Plan.md
@@ -33,18 +34,28 @@ This repository records my reverse-engineering notes on Claude Code, including b
         ├── Glob.md
         ├── Grep.md
         ├── KillShell.md
+        ├── ListMcpResourcesTool.md
         ├── NotebookEdit.md
         ├── Read.md
+        ├── ReadMcpResourceTool.md
         ├── Skill.md
         ├── Task.md
+        ├── TaskCreate.md
+        ├── TaskGet.md
+        ├── TaskList.md
         ├── TaskOutput.md
-        ├── TodoWrite.md
+        ├── TaskStop.md
+        ├── TaskUpdate.md
         ├── WebFetch.md
         ├── WebSearch.md
         └── Write.md
 ```
 
 ## Prompt Overview
+
+### Agents (`prompts/agents/`)
+
+- [`CreateAgent.md`](prompts/agents/CreateAgent.md) - Generator prompt used when creating a custom agent from `/agent` (outputs `identifier` / `whenToUse` / `systemPrompt`)
 
 ### Built-in Agents (`prompts/agents/built-in/`)
 
@@ -64,12 +75,18 @@ This repository records my reverse-engineering notes on Claude Code, including b
 - [`Glob.md`](prompts/tools/Glob.md) - Fast file pattern matching via glob
 - [`Grep.md`](prompts/tools/Grep.md) - Content search powered by ripgrep
 - [`KillShell.md`](prompts/tools/KillShell.md) - Terminate a background shell session
+- [`ListMcpResourcesTool.md`](prompts/tools/ListMcpResourcesTool.md) - List available resources from configured MCP servers (optionally filtered by server)
 - [`NotebookEdit.md`](prompts/tools/NotebookEdit.md) - Edit/insert/delete Jupyter notebook cells
 - [`Read.md`](prompts/tools/Read.md) - Read files (supports images/PDF/ipynb)
+- [`ReadMcpResourceTool.md`](prompts/tools/ReadMcpResourceTool.md) - Read a specific MCP resource by `server` and `uri`
 - [`Skill.md`](prompts/tools/Skill.md) - Invoke a skill (slash command)
 - [`Task.md`](prompts/tools/Task.md) - Launch subagents for complex multi-step work
+- [`TaskCreate.md`](prompts/tools/TaskCreate.md) - Create structured tasks in the task list
+- [`TaskGet.md`](prompts/tools/TaskGet.md) - Retrieve full task details by task ID
+- [`TaskList.md`](prompts/tools/TaskList.md) - List task summaries and statuses
 - [`TaskOutput.md`](prompts/tools/TaskOutput.md) - Retrieve output for a task/agent/shell
-- [`TodoWrite.md`](prompts/tools/TodoWrite.md) - Manage a structured TODO list
+- [`TaskStop.md`](prompts/tools/TaskStop.md) - Stop a running background task
+- [`TaskUpdate.md`](prompts/tools/TaskUpdate.md) - Update task status, dependencies, owner, and metadata
 - [`WebFetch.md`](prompts/tools/WebFetch.md) - Fetch a URL and extract info with a prompt
 - [`WebSearch.md`](prompts/tools/WebSearch.md) - Web search (requires listing Sources)
 - [`Write.md`](prompts/tools/Write.md) - Write files to disk (overwrites; Read required for existing files)
