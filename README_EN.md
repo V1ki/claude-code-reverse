@@ -19,12 +19,14 @@ This repository records my reverse-engineering notes on Claude Code, including b
 └── prompts
     ├── agents
     │   ├── CreateAgent.md
-    │   └── built-in
-    │       ├── Explore.md
-    │       ├── Plan.md
-    │       ├── claude-code-guide.md
-    │       ├── general-purpose.md
-    │       └── statusline-setup.md
+    │   ├── built-in
+    │   │   ├── Explore.md
+    │   │   ├── Plan.md
+    │   │   ├── claude-code-guide.md
+    │   │   ├── general-purpose.md
+    │   │   └── statusline-setup.md
+    │   └── system
+    │       └── default.md
     └── tools
         ├── AskUserQuestion.md
         ├── Bash.md
@@ -56,6 +58,10 @@ This repository records my reverse-engineering notes on Claude Code, including b
 ### Agents (`prompts/agents/`)
 
 - [`CreateAgent.md`](prompts/agents/CreateAgent.md) - Generator prompt used when creating a custom agent from `/agent` (outputs `identifier` / `whenToUse` / `systemPrompt`)
+
+### System Agents (`prompts/agents/system/`)
+
+- [`default.md`](prompts/agents/system/default.md) - Default system instructions and behavior policy used in normal chat flow; effectively the main agent entry point
 
 ### Built-in Agents (`prompts/agents/built-in/`)
 
@@ -95,4 +101,5 @@ This repository records my reverse-engineering notes on Claude Code, including b
 
 - [`prompts/`](prompts)
 - [`prompts/agents/built-in/`](prompts/agents/built-in)
+- [`prompts/agents/system/`](prompts/agents/system)
 - [`prompts/tools/`](prompts/tools)

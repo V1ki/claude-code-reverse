@@ -19,12 +19,14 @@
 └── prompts
     ├── agents
     │   ├── CreateAgent.md
-    │   └── built-in
-    │       ├── Explore.md
-    │       ├── Plan.md
-    │       ├── claude-code-guide.md
-    │       ├── general-purpose.md
-    │       └── statusline-setup.md
+    │   ├── built-in
+    │   │   ├── Explore.md
+    │   │   ├── Plan.md
+    │   │   ├── claude-code-guide.md
+    │   │   ├── general-purpose.md
+    │   │   └── statusline-setup.md
+    │   └── system
+    │       └── default.md
     └── tools
         ├── AskUserQuestion.md
         ├── Bash.md
@@ -57,6 +59,10 @@
 ### Agents (`prompts/agents/`)
 
 - [`CreateAgent.md`](prompts/agents/CreateAgent.md)：在 `/agent` 中创建自定义 agent 时使用的生成器提示词（输出 `identifier` / `whenToUse` / `systemPrompt`）
+
+### System Agents (`prompts/agents/system/`)
+
+- [`default.md`](prompts/agents/system/default.md)：正常对话时触发的默认系统提示词与行为准则，可视为主 agent 入口
 
 ### Built-in Agents (`prompts/agents/built-in/`)
 
@@ -96,4 +102,5 @@
 
 - [`prompts/`](prompts)
 - [`prompts/agents/built-in/`](prompts/agents/built-in)
+- [`prompts/agents/system/`](prompts/agents/system)
 - [`prompts/tools/`](prompts/tools)
