@@ -27,6 +27,7 @@ This repository records my reverse-engineering notes on Claude Code, including b
     │   │   └── statusline-setup.md
     │   └── system
     │       ├── DetectionNewTopic.md
+    │       ├── Suggestion.md
     │       └── default.md
     └── tools
         ├── AskUserQuestion.md
@@ -66,6 +67,7 @@ This repository records my reverse-engineering notes on Claude Code, including b
 ### System Agents (`prompts/agents/system/`)
 
 - [`DetectionNewTopic.md`](prompts/agents/system/DetectionNewTopic.md) - Invoked before `default.md`; detects whether a user message starts a new topic, and if so extracts a 2-3 word title for dynamic terminal title updates (disabled when `CLAUDE_CODE_DISABLE_TERMINAL_TITLE=true`)
+- [`Suggestion.md`](prompts/agents/system/Suggestion.md) - Enabled when Prompt Suggestion is ON; predicts a likely 2-12 word next user input (output suggestion text only, or nothing)
 - [`default.md`](prompts/agents/system/default.md) - Default system instructions and behavior policy used in normal chat flow; effectively the main agent entry point
 
 ### Built-in Agents (`prompts/agents/built-in/`)
