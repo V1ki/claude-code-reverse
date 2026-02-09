@@ -28,7 +28,8 @@
     │   └── system
     │       ├── DetectionNewTopic.md
     │       ├── Suggestion.md
-    │       └── default.md
+    │       ├── default.md
+    │       └── output_style.md
     └── tools
         ├── AskUserQuestion.md
         ├── Bash.md
@@ -70,6 +71,7 @@
 - [`DetectionNewTopic.md`](prompts/agents/system/DetectionNewTopic.md)：在 `default.md` 触发前调用，判断用户消息是否进入新话题；若是则提取 2-3 词标题用于动态更新终端标题（`CLAUDE_CODE_DISABLE_TERMINAL_TITLE=true` 时不设置）
 - [`Suggestion.md`](prompts/agents/system/Suggestion.md)：在 Prompt Suggestion 打开时启用，预测用户下一步最可能输入的 2-12 词短建议（仅输出建议文本，可为空）
 - [`default.md`](prompts/agents/system/default.md)：正常对话时触发的默认系统提示词与行为准则，可视为主 agent 入口
+- [`output_style.md`](prompts/agents/system/output_style.md)：由配置中的输出风格开关触发，定义 `Default` / `Explanatory` / `Learning` 三种交互表达与教学引导策略
 
 ### Built-in Agents (`prompts/agents/built-in/`)
 

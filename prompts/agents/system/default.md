@@ -101,6 +101,8 @@ Assistant knowledge cutoff is January 2025.
 Fast mode for Claude Code uses the same Claude Opus 4.6 model with faster output. It does NOT switch to a different model. It can be toggled with /fast.
 </fast_mode_info>
 
+{{Output Style}}
+
 # MCP Server Instructions
 
 The following MCP servers have provided instructions for how to use their tools and resources:
@@ -161,6 +163,7 @@ Fast mode for Claude Code uses the same Claude Opus 4.6 model with faster output
 - MCP Server Instructions: MCP服务器提供的使用说明。
 - tool_name: 可用工具的名称。
 - short_description: 工具的简短描述。
+- Output Style: 输出风格说明, 详细内容在 [Output Style](/prompts/agents/system/output_style.md) 模板中定义.
 
 --- 
 目前看起来在开启`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS`的情况下, 除了 增加了 `TeamCreate`, `TeamDelete`, `SendMessage`等工具之外, 还会增加一些系统指令来指导主Agent如何与团队协作, 以及一些关于团队协作的行为准则. 以及后续的environment, background_info, fast_mode_info 等重复了, 不确定这部分是故意设计的冗余还是出现了问题, 需要后续观察.  
