@@ -41,6 +41,7 @@
         ├── NotebookEdit.md
         ├── Read.md
         ├── ReadMcpResourceTool.md
+        ├── SendMessage.md
         ├── Skill.md
         ├── Task.md
         ├── TaskCreate.md
@@ -49,6 +50,8 @@
         ├── TaskOutput.md
         ├── TaskStop.md
         ├── TaskUpdate.md
+        ├── TeamCreate.md
+        ├── TeamDelete.md
         ├── WebFetch.md
         ├── WebSearch.md
         └── Write.md
@@ -88,6 +91,7 @@
 - [`NotebookEdit.md`](prompts/tools/NotebookEdit.md)：编辑/插入/删除 Jupyter notebook cell
 - [`Read.md`](prompts/tools/Read.md)：读取文件内容（支持图片/PDF/ipynb）
 - [`ReadMcpResourceTool.md`](prompts/tools/ReadMcpResourceTool.md)：按 `server` + `uri` 读取 MCP 资源
+- [`SendMessage.md`](prompts/tools/SendMessage.md)：向团队内 agent 发送消息（单播/广播），并处理 shutdown 与 plan approval 请求响应（需启用 `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS`）
 - [`Skill.md`](prompts/tools/Skill.md)：执行 skill（slash command，如 `/commit`）
 - [`Task.md`](prompts/tools/Task.md)：启动子 agent 执行复杂多步任务
 - [`TaskCreate.md`](prompts/tools/TaskCreate.md)：创建结构化任务项（task list）
@@ -96,6 +100,8 @@
 - [`TaskOutput.md`](prompts/tools/TaskOutput.md)：获取后台 task/agent/shell 的输出
 - [`TaskStop.md`](prompts/tools/TaskStop.md)：停止运行中的后台 task
 - [`TaskUpdate.md`](prompts/tools/TaskUpdate.md)：更新任务状态、依赖、owner 与元数据
+- [`TeamCreate.md`](prompts/tools/TeamCreate.md)：创建 agent 团队及其对应 task list，用于多 agent 协作分工（需启用 `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS`）
+- [`TeamDelete.md`](prompts/tools/TeamDelete.md)：在团队协作完成后清理 team/task 目录并移除当前会话团队上下文（需先关闭全部活跃 teammate）
 - [`WebFetch.md`](prompts/tools/WebFetch.md)：抓取 URL 内容并按提示抽取信息
 - [`WebSearch.md`](prompts/tools/WebSearch.md)：Web 搜索（要求在答复末尾列出 Sources）
 - [`Write.md`](prompts/tools/Write.md)：写入文件（覆盖写，写已存在文件前需先 Read）

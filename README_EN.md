@@ -41,6 +41,7 @@ This repository records my reverse-engineering notes on Claude Code, including b
         ├── NotebookEdit.md
         ├── Read.md
         ├── ReadMcpResourceTool.md
+        ├── SendMessage.md
         ├── Skill.md
         ├── Task.md
         ├── TaskCreate.md
@@ -49,6 +50,8 @@ This repository records my reverse-engineering notes on Claude Code, including b
         ├── TaskOutput.md
         ├── TaskStop.md
         ├── TaskUpdate.md
+        ├── TeamCreate.md
+        ├── TeamDelete.md
         ├── WebFetch.md
         ├── WebSearch.md
         └── Write.md
@@ -87,6 +90,7 @@ This repository records my reverse-engineering notes on Claude Code, including b
 - [`NotebookEdit.md`](prompts/tools/NotebookEdit.md) - Edit/insert/delete Jupyter notebook cells
 - [`Read.md`](prompts/tools/Read.md) - Read files (supports images/PDF/ipynb)
 - [`ReadMcpResourceTool.md`](prompts/tools/ReadMcpResourceTool.md) - Read a specific MCP resource by `server` and `uri`
+- [`SendMessage.md`](prompts/tools/SendMessage.md) - Send teammate messages (direct or broadcast) and handle shutdown / plan-approval protocol responses (requires `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS`)
 - [`Skill.md`](prompts/tools/Skill.md) - Invoke a skill (slash command)
 - [`Task.md`](prompts/tools/Task.md) - Launch subagents for complex multi-step work
 - [`TaskCreate.md`](prompts/tools/TaskCreate.md) - Create structured tasks in the task list
@@ -95,6 +99,8 @@ This repository records my reverse-engineering notes on Claude Code, including b
 - [`TaskOutput.md`](prompts/tools/TaskOutput.md) - Retrieve output for a task/agent/shell
 - [`TaskStop.md`](prompts/tools/TaskStop.md) - Stop a running background task
 - [`TaskUpdate.md`](prompts/tools/TaskUpdate.md) - Update task status, dependencies, owner, and metadata
+- [`TeamCreate.md`](prompts/tools/TeamCreate.md) - Create an agent team and its corresponding task list for multi-agent collaboration (requires `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS`)
+- [`TeamDelete.md`](prompts/tools/TeamDelete.md) - Clean up team/task directories and clear team context after team work is complete (all active teammates must be shut down first)
 - [`WebFetch.md`](prompts/tools/WebFetch.md) - Fetch a URL and extract info with a prompt
 - [`WebSearch.md`](prompts/tools/WebSearch.md) - Web search (requires listing Sources)
 - [`Write.md`](prompts/tools/Write.md) - Write files to disk (overwrites; Read required for existing files)
