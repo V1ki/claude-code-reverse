@@ -26,6 +26,7 @@
     │   │   ├── general-purpose.md
     │   │   └── statusline-setup.md
     │   └── system
+    │       ├── DetectionNewTopic.md
     │       └── default.md
     └── tools
         ├── AskUserQuestion.md
@@ -62,6 +63,7 @@
 
 ### System Agents (`prompts/agents/system/`)
 
+- [`DetectionNewTopic.md`](prompts/agents/system/DetectionNewTopic.md)：在 `default.md` 触发前调用，判断用户消息是否进入新话题；若是则提取 2-3 词标题用于动态更新终端标题（`CLAUDE_CODE_DISABLE_TERMINAL_TITLE=true` 时不设置）
 - [`default.md`](prompts/agents/system/default.md)：正常对话时触发的默认系统提示词与行为准则，可视为主 agent 入口
 
 ### Built-in Agents (`prompts/agents/built-in/`)

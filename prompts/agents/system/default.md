@@ -1,6 +1,7 @@
 ---
 name: Default System Instructions
-description: 正常对话时触发, 提供默认的系统指令和行为准则. 可以理解为主Agent一般会在用户发送信息后调用。
+whenToUse: 正常对话时触发, 提供默认的系统指令和行为准则. 可以理解为主Agent一般会在用户发送信息后调用。
+description: 提供默认的系统指令和行为准则. 包括对工具使用的指导, 任务执行的建议, 与用户沟通的规范等. 这些指令帮助主Agent在各种情况下都能有效地协助用户完成软件工程任务.
 ---
 
 ```markdown
