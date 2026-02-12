@@ -13,26 +13,7 @@ Available agent types and the tools they have access to:
 - Explore: Fast agent specialized for exploring codebases. Use this when you need to quickly find files by patterns (eg. "src/components/**/*.tsx"), search code for keywords (eg. "API endpoints"), or answer questions about the codebase (eg. "how do API endpoints work?"). When calling this agent, specify the desired thoroughness level: "quick" for basic searches, "medium" for moderate exploration, or "very thorough" for comprehensive analysis across multiple locations and naming conventions. (Tools: All tools except Task, ExitPlanMode, Edit, Write, NotebookEdit)
 - Plan: Software architect agent for designing implementation plans. Use this when you need to plan the implementation strategy for a task. Returns step-by-step plans, identifies critical files, and considers architectural trade-offs. (Tools: All tools except Task, ExitPlanMode, Edit, Write, NotebookEdit)
 - claude-code-guide: Use this agent when the user asks questions ("Can Claude...", "Does Claude...", "How do I...") about: (1) Claude Code (the CLI tool) - features, hooks, slash commands, MCP servers, settings, IDE integrations, keyboard shortcuts; (2) Claude Agent SDK - building custom agents; (3) Claude API (formerly Anthropic API) - API usage, tool use, Anthropic SDK usage. **IMPORTANT:** Before spawning a new agent, check if there is already a running or recently completed claude-code-guide agent that you can resume using the "resume" parameter. (Tools: Glob, Grep, Read, WebFetch, WebSearch)
-- greeting-joker: Use this agent when the user sends a greeting message (such as 'hello', 'hi', 'hey', 'good morning', 'good afternoon', 'good evening', or similar salutations). The agent should respond with both a friendly greeting and an appropriate, lighthearted joke.
 
-Examples:
-- <example>
-user: "Hello!"
-assistant: "I'm going to use the Agent tool to launch the greeting-joker agent to respond with a friendly joke"
-<commentary>The user has greeted me, so I should use the greeting-joker agent to respond with both a greeting and a joke.</commentary>
-</example>
-
-- <example>
-user: "Hey there, how's it going?"
-assistant: "I'm going to use the Agent tool to launch the greeting-joker agent to respond with a friendly joke"
-<commentary>The user is greeting me, so I should use the greeting-joker agent to respond appropriately.</commentary>
-</example>
-
-- <example>
-user: "Good morning!"
-assistant: "I'm going to use the Agent tool to launch the greeting-joker agent to respond with a friendly joke"
-<commentary>The user said good morning, which is a greeting, so I should use the greeting-joker agent.</commentary>
-</example> (Tools: Glob, Grep, Read, WebFetch, TodoWrite, WebSearch)
 
 When using the Task tool, you must specify a subagent_type parameter to select which agent type to use.
 
@@ -61,8 +42,8 @@ Example usage:
 
 <example_agent_descriptions>
 "test-runner": use this agent after you are done writing code to run tests
-"greeting-responder": use this agent when to respond to user greetings with a friendly joke
-</example_agent_description>
+"greeting-responder": use this agent to respond to user greetings with a friendly joke
+</example_agent_descriptions>
 
 <example>
 user: "Please write a function that checks if a number is prime"
@@ -105,3 +86,6 @@ assistant: "I'm going to use the Task tool to launch the greeting-responder agen
 - resume: string, Optional agent ID to resume from. If provided, the agent will continue from the previous execution transcript., optional
 - run_in_background: boolean, Set to true to run this agent in the background. The tool result will include an output_file path - use Read tool or Bash tail to check on output., optional
 - max_turns: integer, Maximum number of agentic turns (API round-trips) before stopping. Used internally for warmup., optional
+- name: string, Name for the spawned agent, optional
+- team_name: string, Team name for spawning. Uses current team context if omitted., optional
+- mode: string, Permission mode for spawned teammate (e.g., "plan" to require plan approval)., optional, enum: acceptEdits | bypassPermissions | default | delegate | dontAsk | plan
