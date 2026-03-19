@@ -2,6 +2,7 @@
 name: WebSearch
 ---
 
+
 - Allows Claude to search the web and use the results to inform responses
 - Provides up-to-date information for current events and recent data
 - Returns search result information formatted as search result blocks, including links as markdown hyperlinks
@@ -25,16 +26,40 @@ Usage notes:
   - Web search is only available in the US
 
 IMPORTANT - Use the correct year in search queries:
-  - Today's date is {{DATE}}. You MUST use this year when searching for recent information, documentation, or current events.
-  - Example: If the user asks for "latest React docs", search for "React documentation 2026", NOT "React documentation 2025"
+  - The current month is March 2026. You MUST use this year when searching for recent information, documentation, or current events.
+  - Example: If the user asks for "latest React docs", search for "React documentation" with the current year, NOT last year
 
 
----
-> {{DATE}} 表示当前日期.
----
+## Input Schema
 
-
-# Tool Params
-- query: string, The search query to use, required
-- allowed_domains: array<string>, Only include search results from these domains, optional
-- blocked_domains: array<string>, Never include search results from these domains, optional
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "query": {
+      "description": "The search query to use",
+      "type": "string",
+      "minLength": 2
+    },
+    "allowed_domains": {
+      "description": "Only include search results from these domains",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "blocked_domains": {
+      "description": "Never include search results from these domains",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "query"
+  ],
+  "additionalProperties": false
+}
+```

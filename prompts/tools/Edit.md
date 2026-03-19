@@ -12,9 +12,36 @@ Usage:
 - The edit will FAIL if `old_string` is not unique in the file. Either provide a larger string with more surrounding context to make it unique or use `replace_all` to change every instance of `old_string`.
 - Use `replace_all` for replacing and renaming strings across the file. This parameter is useful if you want to rename a variable for instance.
 
---- 
-# Tool Params
-- file_path: string, The absolute path to the file to modify, required
-- old_string: string, The text to replace, required
-- new_string: string, The text to replace it with (must be different from old_string), required
-- replace_all: boolean, Replace all occurrences of old_string (default false), optional
+## Input Schema
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "file_path": {
+      "description": "The absolute path to the file to modify",
+      "type": "string"
+    },
+    "old_string": {
+      "description": "The text to replace",
+      "type": "string"
+    },
+    "new_string": {
+      "description": "The text to replace it with (must be different from old_string)",
+      "type": "string"
+    },
+    "replace_all": {
+      "description": "Replace all occurrences of old_string (default false)",
+      "default": false,
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "file_path",
+    "old_string",
+    "new_string"
+  ],
+  "additionalProperties": false
+}
+```

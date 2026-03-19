@@ -24,10 +24,26 @@ Important:
 - Do not use this tool for built-in CLI commands (like /help, /clear, etc.)
 - If you see a <command-name> tag in the current conversation turn, the skill has ALREADY been loaded - follow the instructions directly instead of calling this tool again
 
----
-`Available skills`现在被放到了 system-reminder消息中了.
 
----
-# Tool Params
-- skill: string, The skill name. E.g., "commit", "review-pr", or "pdf", required
-- args: string, Optional arguments for the skill, optional
+## Input Schema
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "skill": {
+      "description": "The skill name. E.g., \"commit\", \"review-pr\", or \"pdf\"",
+      "type": "string"
+    },
+    "args": {
+      "description": "Optional arguments for the skill",
+      "type": "string"
+    }
+  },
+  "required": [
+    "skill"
+  ],
+  "additionalProperties": false
+}
+```

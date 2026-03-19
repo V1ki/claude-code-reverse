@@ -24,6 +24,22 @@ Returns full task details:
 - After fetching a task, verify its blockedBy list is empty before beginning work.
 - Use TaskList to see all tasks in summary form.
 
----
-# Tool Params
-- taskId: string, The ID of the task to retrieve, required
+
+## Input Schema
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "taskId": {
+      "description": "The ID of the task to retrieve",
+      "type": "string"
+    }
+  },
+  "required": [
+    "taskId"
+  ],
+  "additionalProperties": false
+}
+```

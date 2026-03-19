@@ -26,12 +26,40 @@ Ensure your plan is complete and unambiguous:
 2. Initial task: "Help me implement yank mode for vim" - Use the exit plan mode tool after you have finished planning the implementation steps of the task.
 3. Initial task: "Add a new feature to handle user authentication" - If unsure about auth method (OAuth, JWT, etc.), use AskUserQuestion first, then use exit plan mode tool after clarifying the approach.
 
----
-# Tool Params
-- allowedPrompts: array<object>, Prompt-based permissions needed to implement the plan. These describe categories of actions rather than specific commands., optional
-  - tool: string, The tool this prompt applies to, required, enum: Bash
-  - prompt: string, Semantic description of the action, e.g. "run tests", "install dependencies", required
-- pushToRemote: boolean, Whether to push the plan to a remote Claude.ai session, optional
-- remoteSessionId: string, The remote session ID if pushed to remote, optional
-- remoteSessionUrl: string, The remote session URL if pushed to remote, optional
-- remoteSessionTitle: string, The remote session title if pushed to remote, optional
+
+## Input Schema
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "allowedPrompts": {
+      "description": "Prompt-based permissions needed to implement the plan. These describe categories of actions rather than specific commands.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tool": {
+            "description": "The tool this prompt applies to",
+            "type": "string",
+            "enum": [
+              "Bash"
+            ]
+          },
+          "prompt": {
+            "description": "Semantic description of the action, e.g. \"run tests\", \"install dependencies\"",
+            "type": "string"
+          }
+        },
+        "required": [
+          "tool",
+          "prompt"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": {}
+}
+```

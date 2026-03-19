@@ -1,135 +1,141 @@
 ---
 name: SendMessage
-whenToUse: 在开启CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS的情况下,此工具会在工具列表中可用.
 ---
 
 # SendMessageTool
 
 Send messages to agent teammates and handle protocol requests/responses in a team.
 
-## Message Types
+## Schema
 
-### type: "message" - Send a Direct Message
+Every call has three fields:
 
-Send a message to a **single specific teammate**. You MUST specify the recipient.
+- **to**: The recipient address (string, required)
+- **message**: The message content — either a plain string or a structured protocol object (required)
+- **summary**: A 5-10 word preview shown in the UI
 
-**IMPORTANT for teammates**: Your plain text output is NOT visible to the team lead or other teammates. To communicate with anyone on your team, you **MUST** use this tool. Just typing a response or acknowledgment in text is not enough.
+## Addressing (`to`)
 
-```
+There is one team per session. Addressing is by member name:
+
+| Address | Meaning |
+|---------|---------|
+| `"researcher"` | Direct message to the teammate named "researcher" |
+| `"*"` | Broadcast to all teammates (except yourself) |
+
+Structured protocol messages (shutdown, plan approval) cannot be broadcast — they require a specific recipient name.
+
+## Plain Text Messages
+
+Send a message to a **single specific teammate**:
+
+```json
 {
-  "type": "message",
-  "recipient": "researcher",
-  "content": "Your message here",
-  "summary": "Brief status update on auth module"
+  "to": "researcher",
+  "message": "Start working on task #1",
+  "summary": "Assign task #1 to researcher"
 }
 ```
 
-- **recipient**: The name of the teammate to message (required)
-- **content**: The message text (required)
-- **summary**: A 5-10 word summary shown as preview in the UI (required)
+**IMPORTANT for teammates**: Your plain text output is NOT visible to the team lead or other teammates. To communicate with anyone on your team, you **MUST** use this tool. Just typing a response or acknowledgment in text is not enough.
 
-### type: "broadcast" - Send Message to ALL Teammates (USE SPARINGLY)
+## Broadcast to All Teammates (USE SPARINGLY)
 
-Send the **same message to everyone** on the team at once.
+Send the **same message to everyone** on the team at once:
 
-**WARNING: Broadcasting is expensive.** Each broadcast sends a separate message to every teammate, which means:
-- N teammates = N separate message deliveries
-- Each delivery consumes API resources
-- Costs scale linearly with team size
-
-```
+```json
 {
-  "type": "broadcast",
-  "content": "Message to send to all teammates",
+  "to": "*",
+  "message": "Critical blocking issue found — stop all work",
   "summary": "Critical blocking issue found"
 }
 ```
 
-- **content**: The message content to broadcast (required)
-- **summary**: A 5-10 word summary shown as preview in the UI (required)
+**WARNING: Broadcasting is expensive.** Each broadcast sends a separate message to every teammate. Costs scale linearly with team size.
 
 **CRITICAL: Use broadcast only when absolutely necessary.** Valid use cases:
-- Critical issues requiring immediate team-wide attention (e.g., "stop all work, blocking bug found")
+- Critical issues requiring immediate team-wide attention
 - Major announcements that genuinely affect every teammate equally
 
-**Default to "message" instead of "broadcast".** Use "message" for:
-- Responding to a single teammate
-- Normal back-and-forth communication
-- Following up on a task with one person
-- Sharing findings relevant to only some teammates
-- Any message that doesn't require everyone's attention
+**Default to direct messages.** Use a specific `to` name for responding to one teammate, normal back-and-forth, or anything that doesn't require everyone's attention.
 
-### type: "shutdown_request" - Request a Teammate to Shut Down
+## Structured Protocol Messages
 
-Use this to ask a teammate to gracefully shut down:
+### Shutdown Request
 
-```
+Ask a teammate to gracefully shut down:
+
+```json
 {
-  "type": "shutdown_request",
-  "recipient": "researcher",
-  "content": "Task complete, wrapping up the session"
+  "to": "researcher",
+  "message": {
+    "type": "shutdown_request",
+    "reason": "Task complete, wrapping up the session"
+  }
 }
 ```
 
 The teammate will receive a shutdown request and can either approve (exit) or reject (continue working).
 
-### type: "shutdown_response" - Respond to a Shutdown Request
+### Shutdown Response
 
-#### Approve Shutdown
+When you receive a shutdown request as a JSON message with `type: "shutdown_request"`, you **MUST** respond to approve or reject it. Do NOT just acknowledge in text — call this tool.
 
-When you receive a shutdown request as a JSON message with `type: "shutdown_request"`, you **MUST** respond to approve or reject it. Do NOT just acknowledge the request in text - you must actually call this tool.
-
-```
+**Approve:**
+```json
 {
-  "type": "shutdown_response",
-  "request_id": "abc-123",
-  "approve": true
+  "to": "team-lead",
+  "message": {
+    "type": "shutdown_response",
+    "request_id": "abc-123",
+    "approve": true
+  }
 }
 ```
 
-**IMPORTANT**: Extract the `requestId` from the JSON message and pass it as `request_id` to the tool. Simply saying "I'll shut down" is not enough - you must call the tool.
+Extract `requestId` from the incoming JSON and pass it as `request_id`. This sends confirmation to the leader and terminates your process.
 
-This will send confirmation to the leader and terminate your process.
-
-#### Reject Shutdown
-
-```
+**Reject:**
+```json
 {
-  "type": "shutdown_response",
-  "request_id": "abc-123",
-  "approve": false,
-  "content": "Still working on task #3, need 5 more minutes"
+  "to": "team-lead",
+  "message": {
+    "type": "shutdown_response",
+    "request_id": "abc-123",
+    "approve": false,
+    "reason": "Still working on task #3, need 5 more minutes"
+  }
 }
 ```
 
-The leader will receive your rejection with the reason.
+### Plan Approval Response
 
-### type: "plan_approval_response" - Approve or Reject a Teammate's Plan
+When a teammate with `plan_mode_required` calls ExitPlanMode, they send you a plan approval request as a JSON message with `type: "plan_approval_request"`.
 
-#### Approve Plan
-
-When a teammate with `plan_mode_required` calls ExitPlanMode, they send you a plan approval request as a JSON message with `type: "plan_approval_request"`. Use this to approve their plan:
-
-```
+**Approve:**
+```json
 {
-  "type": "plan_approval_response",
-  "request_id": "abc-123",
-  "recipient": "researcher",
-  "approve": true
+  "to": "researcher",
+  "message": {
+    "type": "plan_approval_response",
+    "request_id": "abc-123",
+    "approve": true
+  }
 }
 ```
 
 After approval, the teammate will automatically exit plan mode and can proceed with implementation.
 
-#### Reject Plan
-
-```
+**Reject:**
+```json
 {
-  "type": "plan_approval_response",
-  "request_id": "abc-123",
-  "recipient": "researcher",
-  "approve": false,
-  "content": "Please add error handling for the API calls"
+  "to": "researcher",
+  "message": {
+    "type": "plan_approval_response",
+    "request_id": "abc-123",
+    "approve": false,
+    "feedback": "Please add error handling for the API calls"
+  }
 }
 ```
 
@@ -138,15 +144,106 @@ The teammate will receive the rejection with your feedback and can revise their 
 ## Important Notes
 
 - Messages from teammates are automatically delivered to you. You do NOT need to manually check your inbox.
-- When reporting on teammate messages, you do NOT need to quote the original message - it's already rendered to the user.
-- **IMPORTANT**: Always refer to teammates by their NAME (e.g., "team-lead", "researcher", "tester"), never by UUID.
+- When reporting on teammate messages, you do NOT need to quote the original message — it's already rendered to the user.
+- **IMPORTANT**: Always refer to teammates by their NAME (e.g., "team-lead", "researcher"), never by UUID.
 - Do NOT send structured JSON status messages. Use TaskUpdate to mark tasks completed and the system will automatically send idle notifications when you stop.
 
----
-# Tool Params
-- type: string, Message type: "message" for DMs, "broadcast" to all teammates, "shutdown_request" to request shutdown, "shutdown_response" to respond to shutdown, "plan_approval_response" to approve/reject plans, required, enum: message | broadcast | shutdown_request | shutdown_response | plan_approval_response
-- recipient: string, Agent name of the recipient (required for message, shutdown_request, plan_approval_response), optional
-- content: string, Message text, reason, or feedback, optional
-- summary: string, A 5-10 word summary of the message, shown as a preview in the UI (required for message, broadcast), optional
-- request_id: string, Request ID to respond to (required for shutdown_response, plan_approval_response), optional
-- approve: boolean, Whether to approve the request (required for shutdown_response, plan_approval_response), optional
+## Input Schema
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "to": {
+      "description": "Recipient: teammate name, or \"*\" for broadcast to all teammates",
+      "type": "string"
+    },
+    "message": {
+      "anyOf": [
+        {
+          "description": "Plain text message content",
+          "type": "string"
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "const": "shutdown_request"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "const": "shutdown_response"
+                },
+                "request_id": {
+                  "type": "string"
+                },
+                "approve": {
+                  "type": "boolean"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type",
+                "request_id",
+                "approve"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "const": "plan_approval_response"
+                },
+                "request_id": {
+                  "type": "string"
+                },
+                "approve": {
+                  "type": "boolean"
+                },
+                "feedback": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type",
+                "request_id",
+                "approve"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        }
+      ]
+    },
+    "summary": {
+      "description": "A 5-10 word summary shown as a preview in the UI (required when message is a string)",
+      "type": "string"
+    }
+  },
+  "required": [
+    "to",
+    "message"
+  ],
+  "additionalProperties": false
+}
+```

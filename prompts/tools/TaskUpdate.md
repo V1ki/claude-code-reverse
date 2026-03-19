@@ -77,14 +77,77 @@ Set up task dependencies:
 {"taskId": "2", "addBlockedBy": ["1"]}
 ```
 
---- 
-# Tool Params
-- taskId: string, The ID of the task to update, required
-- subject: string, New subject for the task, optional
-- description: string, New description for the task, optional
-- activeForm: string, Present continuous form shown in spinner when in_progress (e.g., "Running tests"), optional
-- status: string | string, New status for the task, optional
-- addBlocks: array<string>, Task IDs that this task blocks, optional
-- addBlockedBy: array<string>, Task IDs that block this task, optional
-- owner: string, New owner for the task, optional
-- metadata: object, Metadata keys to merge into the task. Set a key to null to delete it., optional
+
+## Input Schema
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "taskId": {
+      "description": "The ID of the task to update",
+      "type": "string"
+    },
+    "subject": {
+      "description": "New subject for the task",
+      "type": "string"
+    },
+    "description": {
+      "description": "New description for the task",
+      "type": "string"
+    },
+    "activeForm": {
+      "description": "Present continuous form shown in spinner when in_progress (e.g., \"Running tests\")",
+      "type": "string"
+    },
+    "status": {
+      "description": "New status for the task",
+      "anyOf": [
+        {
+          "type": "string",
+          "enum": [
+            "pending",
+            "in_progress",
+            "completed"
+          ]
+        },
+        {
+          "type": "string",
+          "const": "deleted"
+        }
+      ]
+    },
+    "addBlocks": {
+      "description": "Task IDs that this task blocks",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "addBlockedBy": {
+      "description": "Task IDs that block this task",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "owner": {
+      "description": "New owner for the task",
+      "type": "string"
+    },
+    "metadata": {
+      "description": "Metadata keys to merge into the task. Set a key to null to delete it.",
+      "type": "object",
+      "propertyNames": {
+        "type": "string"
+      },
+      "additionalProperties": {}
+    }
+  },
+  "required": [
+    "taskId"
+  ],
+  "additionalProperties": false
+}
+```

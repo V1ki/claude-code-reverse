@@ -42,7 +42,7 @@ Only skip EnterPlanMode for simple tasks:
 - Single-line or few-line fixes (typos, obvious bugs, small tweaks)
 - Adding a single function with clear requirements
 - Tasks where the user has given very specific, detailed instructions
-- Pure research/exploration tasks (use the Task tool with explore agent instead)
+- Pure research/exploration tasks (use the Agent tool with explore agent instead)
 
 ## What Happens in Plan Mode
 
@@ -87,3 +87,4 @@ User: "What files handle routing?"
 - This tool REQUIRES user approval - they must consent to entering plan mode
 - If unsure whether to use it, err on the side of planning - it's better to get alignment upfront than to redo work
 - Users appreciate being consulted before significant changes are made to their codebase
+

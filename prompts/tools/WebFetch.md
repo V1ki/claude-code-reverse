@@ -2,6 +2,8 @@
 name: WebFetch
 ---
 
+IMPORTANT: WebFetch WILL FAIL for authenticated or private URLs. Before using this tool, check if the URL points to an authenticated service (e.g. Google Docs, Confluence, Jira, GitHub). If so, look for a specialized MCP tool that provides authenticated access.
+
 - Fetches content from a specified URL and processes it using an AI model
 - Takes a URL and a prompt as input
 - Fetches the URL content, converts HTML to markdown
@@ -20,7 +22,28 @@ Usage notes:
   - When a URL redirects to a different host, the tool will inform you and provide the redirect URL in a special format. You should then make a new WebFetch request with the redirect URL to fetch the content.
   - For GitHub URLs, prefer using the gh CLI via Bash instead (e.g., gh pr view, gh issue view, gh api).
 
----
-# Tool Params
-- url: string, The URL to fetch content from, required
-- prompt: string, The prompt to run on the fetched content, required
+
+## Input Schema
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "url": {
+      "description": "The URL to fetch content from",
+      "type": "string",
+      "format": "uri"
+    },
+    "prompt": {
+      "description": "The prompt to run on the fetched content",
+      "type": "string"
+    }
+  },
+  "required": [
+    "url",
+    "prompt"
+  ],
+  "additionalProperties": false
+}
+```

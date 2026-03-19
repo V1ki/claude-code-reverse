@@ -1,7 +1,7 @@
 ---
 name: TeamCreate
-whenToUse: 在开启CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS的情况下,此工具会在工具列表中可用.
 ---
+
 # TeamCreate
 
 ## When to Use
@@ -15,13 +15,13 @@ When in doubt about whether a task warrants a team, prefer spawning a team.
 
 ## Choosing Agent Types for Teammates
 
-When spawning teammates via the Task tool, choose the `subagent_type` based on what tools the agent needs for its task. Each agent type has a different set of available tools — match the agent to the work:
+When spawning teammates via the Agent tool, choose the `subagent_type` based on what tools the agent needs for its task. Each agent type has a different set of available tools — match the agent to the work:
 
 - **Read-only agents** (e.g., Explore, Plan) cannot edit or write files. Only assign them research, search, or planning tasks. Never assign them implementation work.
 - **Full-capability agents** (e.g., general-purpose) have access to all tools including file editing, writing, and bash. Use these for tasks that require making changes.
 - **Custom agents** defined in `.claude/agents/` may have their own tool restrictions. Check their descriptions to understand what they can and cannot do.
 
-Always review the agent type descriptions and their available tools listed in the Task tool prompt before selecting a `subagent_type` for a teammate.
+Always review the agent type descriptions and their available tools listed in the Agent tool prompt before selecting a `subagent_type` for a teammate.
 
 Create a new team to coordinate multiple agents working on a project. Teams have a 1:1 correspondence with task lists (Team = TaskList).
 
@@ -40,11 +40,11 @@ This creates:
 
 1. **Create a team** with TeamCreate - this creates both the team and its task list
 2. **Create tasks** using the Task tools (TaskCreate, TaskList, etc.) - they automatically use the team's task list
-3. **Spawn teammates** using the Task tool with `team_name` and `name` parameters to create teammates that join the team
+3. **Spawn teammates** using the Agent tool with `team_name` and `name` parameters to create teammates that join the team
 4. **Assign tasks** using TaskUpdate with `owner` to give tasks to idle teammates
 5. **Teammates work on assigned tasks** and mark them completed via TaskUpdate
 6. **Teammates go idle between turns** - after each turn, teammates automatically go idle and send a notification. IMPORTANT: Be patient with idle teammates! Don't comment on their idleness until it actually impacts your work.
-7. **Shutdown your team** - when the task is completed, gracefully shut down your teammates via SendMessage with type: "shutdown_request".
+7. **Shutdown your team** - when the task is completed, gracefully shut down your teammates via SendMessage with `message: {type: "shutdown_request"}`.
 
 ## Task Ownership
 
@@ -84,7 +84,7 @@ The config file contains a `members` array with each teammate's:
 - `agentType`: Role/type of the agent
 
 **IMPORTANT**: Always refer to teammates by their NAME (e.g., "team-lead", "researcher", "tester"). Names are used for:
-- `target_agent_id` when sending messages
+- `to` when sending messages
 - Identifying task owners
 
 Example of reading team config:
@@ -111,9 +111,29 @@ Teammates should:
 - Use TaskUpdate to mark tasks completed.
 - If you are an agent in the team, the system will automatically send idle notifications to the team lead when you stop.
 
----
+## Input Schema
 
-# Tool Params
-- team_name: string, Name for the new team to create., required
-- description: string, Team description/purpose., optional
-- agent_type: string, Type/role of the team lead (e.g., "researcher", "test-runner"). Used for team file and inter-agent coordination., optional
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "team_name": {
+      "description": "Name for the new team to create.",
+      "type": "string"
+    },
+    "description": {
+      "description": "Team description/purpose.",
+      "type": "string"
+    },
+    "agent_type": {
+      "description": "Type/role of the team lead (e.g., \"researcher\", \"test-runner\"). Used for team file and inter-agent coordination.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "team_name"
+  ],
+  "additionalProperties": false
+}
+```

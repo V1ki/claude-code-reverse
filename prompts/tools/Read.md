@@ -8,8 +8,7 @@ Assume this tool is able to read all files on the machine. If the User provides 
 Usage:
 - The file_path parameter must be an absolute path, not a relative path
 - By default, it reads up to 2000 lines starting from the beginning of the file
-- You can optionally specify a line offset and limit (especially handy for long files), but it's recommended to read the whole file by not providing these parameters
-- Any lines longer than 2000 characters will be truncated
+- When you already know which part of the file you need, only read that part. This can be important for larger files.
 - Results are returned using cat -n format, with line numbers starting at 1
 - This tool allows Claude Code to read images (eg PNG, JPG, etc). When reading an image file the contents are presented visually as Claude Code is a multimodal LLM.
 - This tool can read PDF files (.pdf). For large PDFs (more than 10 pages), you MUST provide the pages parameter to read specific page ranges (e.g., pages: "1-5"). Reading a large PDF without the pages parameter will fail. Maximum 20 pages per request.
@@ -19,9 +18,33 @@ Usage:
 - You will regularly be asked to read screenshots. If the user provides a path to a screenshot, ALWAYS use this tool to view the file at the path. This tool will work with all temporary file paths.
 - If you read a file that exists but has empty contents you will receive a system reminder warning in place of file contents.
 
----
-# Tool Params
-- file_path: string, The absolute path to the file to read, required
-- offset: number, The line number to start reading from. Only provide if the file is too large to read at once, optional
-- limit: number, The number of lines to read. Only provide if the file is too large to read at once., optional
-- pages: string, Page range for PDF files (e.g., "1-5", "3", "10-20"). Only applicable to PDF files. Maximum 20 pages per request., optional
+## Input Schema
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "file_path": {
+      "description": "The absolute path to the file to read",
+      "type": "string"
+    },
+    "offset": {
+      "description": "The line number to start reading from. Only provide if the file is too large to read at once",
+      "type": "number"
+    },
+    "limit": {
+      "description": "The number of lines to read. Only provide if the file is too large to read at once.",
+      "type": "number"
+    },
+    "pages": {
+      "description": "Page range for PDF files (e.g., \"1-5\", \"3\", \"10-20\"). Only applicable to PDF files. Maximum 20 pages per request.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "file_path"
+  ],
+  "additionalProperties": false
+}
+```

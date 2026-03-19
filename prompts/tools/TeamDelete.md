@@ -1,7 +1,7 @@
 ---
 name: TeamDelete
-whenToUse: 在开启CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS的情况下,此工具会在工具列表中可用.
 ---
+
 # TeamDelete
 
 Remove team and task directories when the swarm work is complete.

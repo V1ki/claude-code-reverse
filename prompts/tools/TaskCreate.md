@@ -10,7 +10,7 @@ It also helps the user understand the progress of the task and overall progress 
 Use this tool proactively in these scenarios:
 
 - Complex multi-step tasks - When a task requires 3 or more distinct steps or actions
-- Non-trivial and complex tasks - Tasks that require careful planning or multiple operations
+- Non-trivial and complex tasks - Tasks that require careful planning or multiple operations and potentially assigned to teammates
 - Plan mode - When using plan mode, create a task list to track the work
 - User explicitly requests todo list - When the user directly asks you to use the todo list
 - User provides multiple tasks - When users provide a list of things to be done (numbered or comma-separated)
@@ -32,20 +32,51 @@ NOTE that you should not use this tool if there is only one trivial task to do. 
 
 - **subject**: A brief, actionable title in imperative form (e.g., "Fix authentication bug in login flow")
 - **description**: Detailed description of what needs to be done, including context and acceptance criteria
-- **activeForm**: Present continuous form shown in spinner when task is in_progress (e.g., "Fixing authentication bug"). This is displayed to the user while you work on the task.
+- **activeForm** (optional): Present continuous form shown in the spinner when the task is in_progress (e.g., "Fixing authentication bug"). If omitted, the spinner shows the subject instead.
 
-**IMPORTANT**: Always provide activeForm when creating tasks. The subject should be imperative ("Run tests") while activeForm should be present continuous ("Running tests"). All tasks are created with status `pending`.
+All tasks are created with status `pending`.
 
 ## Tips
 
 - Create tasks with clear, specific subjects that describe the outcome
 - Include enough detail in the description for another agent to understand and complete the task
 - After creating tasks, use TaskUpdate to set up dependencies (blocks/blockedBy) if needed
+- New tasks are created with status 'pending' and no owner - use TaskUpdate with the `owner` parameter to assign them
 - Check TaskList first to avoid creating duplicate tasks
 
----
-# Tool Params
-- subject: string, A brief title for the task, required
-- description: string, A detailed description of what needs to be done, required
-- activeForm: string, Present continuous form shown in spinner when in_progress (e.g., "Running tests"), optional
-- metadata: object, Arbitrary metadata to attach to the task, optional
+
+## Input Schema
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "subject": {
+      "description": "A brief title for the task",
+      "type": "string"
+    },
+    "description": {
+      "description": "A detailed description of what needs to be done",
+      "type": "string"
+    },
+    "activeForm": {
+      "description": "Present continuous form shown in spinner when in_progress (e.g., \"Running tests\")",
+      "type": "string"
+    },
+    "metadata": {
+      "description": "Arbitrary metadata to attach to the task",
+      "type": "object",
+      "propertyNames": {
+        "type": "string"
+      },
+      "additionalProperties": {}
+    }
+  },
+  "required": [
+    "subject",
+    "description"
+  ],
+  "additionalProperties": false
+}
+```
